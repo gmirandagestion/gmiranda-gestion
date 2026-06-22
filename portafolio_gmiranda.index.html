@@ -1,0 +1,487 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Gabriela Miranda · Control de Gestión para Pymes</title>
+<meta name="description" content="Consultora especializada en control de gestión para pymes. Toma decisiones con datos reales. Región de Valparaíso, Chile.">
+<style>
+  :root {
+    --verde: #5AADA4;
+    --verde-claro: #E8F4F2;
+    --ambar: #F2D6D0;
+    --ambar-claro: #FBF0EE;
+    --oscuro: #2E1F1D;
+    --gris: #FAF8F5;
+    --gris-medio: #EAE6E2;
+    --texto: #2E1F1D;
+    --texto-suave: #7A6A68;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+    color: var(--texto);
+    background: white;
+    line-height: 1.6;
+  }
+
+  /* ── NAV ── */
+  nav {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+    background: rgba(255,255,255,0.95);
+    backdrop-filter: blur(8px);
+    border-bottom: 1px solid var(--gris-medio);
+    padding: 14px 32px;
+    display: flex; align-items: center; justify-content: space-between;
+  }
+  .nav-logo { font-weight: 700; font-size: 15px; color: var(--oscuro); letter-spacing: -0.3px; }
+  .nav-logo span { color: var(--verde); }
+  .nav-links { display: flex; gap: 28px; list-style: none; }
+  .nav-links a { text-decoration: none; font-size: 13px; color: var(--texto-suave); font-weight: 500; transition: color .2s; }
+  .nav-links a:hover { color: var(--verde); }
+  .nav-cta {
+    background: var(--verde); color: white;
+    padding: 9px 20px; border-radius: 8px;
+    text-decoration: none; font-size: 13px; font-weight: 600;
+    transition: background .2s;
+  }
+  .nav-cta:hover { background: var(--oscuro); }
+
+  /* ── HERO ── */
+  #inicio {
+    min-height: 100vh;
+    background: linear-gradient(135deg, #2E1F1D 0%, #3D3230 55%, #4A8C86 100%);
+    display: flex; flex-direction: column; align-items: center; justify-content: center;
+    text-align: center; padding: 120px 24px 80px;
+    position: relative; overflow: hidden;
+  }
+  #inicio::before {
+    content: '';
+    position: absolute; inset: 0;
+    background: radial-gradient(ellipse at 70% 50%, rgba(200,230,226,.10) 0%, transparent 60%);
+  }
+  .hero-badge {
+    display: inline-block;
+    background: rgba(242,214,208,.15); border: 1px solid rgba(242,214,208,.4);
+    color: var(--ambar); padding: 6px 16px; border-radius: 20px;
+    font-size: 12px; font-weight: 600; letter-spacing: .5px; text-transform: uppercase;
+    margin-bottom: 24px;
+  }
+  .hero-titulo {
+    font-size: clamp(36px, 6vw, 64px);
+    font-weight: 800; color: white; line-height: 1.1;
+    letter-spacing: -1px; margin-bottom: 20px;
+  }
+  .hero-titulo .highlight { color: var(--ambar); }
+  .hero-subtitulo {
+    font-size: clamp(16px, 2.5vw, 20px);
+    color: rgba(255,255,255,.75); max-width: 560px;
+    margin: 0 auto 40px; line-height: 1.6;
+  }
+  .hero-btns { display: flex; gap: 14px; justify-content: center; flex-wrap: wrap; }
+  .btn-primary {
+    background: var(--ambar); color: var(--oscuro);
+    padding: 14px 28px; border-radius: 10px;
+    text-decoration: none; font-weight: 700; font-size: 15px;
+    transition: transform .2s, box-shadow .2s;
+    box-shadow: 0 4px 20px rgba(242,214,208,.45);
+  }
+  .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 8px 28px rgba(242,214,208,.55); }
+  .btn-secondary {
+    background: rgba(255,255,255,.1); color: white;
+    padding: 14px 28px; border-radius: 10px;
+    text-decoration: none; font-weight: 600; font-size: 15px;
+    border: 1.5px solid rgba(255,255,255,.25);
+    transition: background .2s;
+  }
+  .btn-secondary:hover { background: rgba(255,255,255,.18); }
+
+  .hero-stats {
+    display: flex; gap: 48px; justify-content: center; flex-wrap: wrap;
+    margin-top: 64px; padding-top: 48px;
+    border-top: 1px solid rgba(255,255,255,.12);
+  }
+  .stat-item { text-align: center; }
+  .stat-num { font-size: 36px; font-weight: 800; color: #C8E6E2; line-height: 1; }
+  .stat-label { font-size: 12px; color: rgba(255,255,255,.6); margin-top: 4px; text-transform: uppercase; letter-spacing: .5px; }
+
+  /* ── SECCIONES ── */
+  section { padding: 80px 24px; }
+  .container { max-width: 1100px; margin: 0 auto; }
+  .section-label {
+    font-size: 11px; font-weight: 700; color: var(--verde);
+    text-transform: uppercase; letter-spacing: 1.5px; margin-bottom: 12px;
+  }
+  .section-titulo { font-size: clamp(26px, 4vw, 40px); font-weight: 800; line-height: 1.2; color: var(--oscuro); margin-bottom: 16px; }
+  .section-desc { font-size: 16px; color: var(--texto-suave); max-width: 560px; line-height: 1.7; }
+
+  /* ── SERVICIOS ── */
+  #servicios { background: var(--gris); }
+  .servicios-header { text-align: center; margin-bottom: 56px; }
+  .servicios-header .section-desc { margin: 0 auto; }
+  .servicios-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 24px; }
+  .servicio-card {
+    background: white; border-radius: 16px; padding: 32px;
+    box-shadow: 0 2px 8px rgba(0,0,0,.06);
+    transition: transform .2s, box-shadow .2s;
+    border: 1.5px solid transparent;
+  }
+  .servicio-card:hover { transform: translateY(-4px); box-shadow: 0 12px 32px rgba(0,0,0,.1); border-color: var(--verde-claro); }
+  .servicio-icono {
+    width: 52px; height: 52px; border-radius: 14px;
+    background: var(--verde-claro); display: flex; align-items: center; justify-content: center;
+    font-size: 24px; margin-bottom: 20px;
+  }
+  .servicio-titulo { font-size: 18px; font-weight: 700; color: var(--oscuro); margin-bottom: 10px; }
+  .servicio-desc { font-size: 14px; color: var(--texto-suave); line-height: 1.7; margin-bottom: 16px; }
+  .servicio-entregables { list-style: none; }
+  .servicio-entregables li { font-size: 13px; color: var(--texto-suave); padding: 4px 0; padding-left: 18px; position: relative; }
+  .servicio-entregables li::before { content: '✓'; position: absolute; left: 0; color: var(--verde); font-weight: 700; }
+
+  /* ── PORTAFOLIO ── */
+  #portafolio { background: white; }
+  .portafolio-header { margin-bottom: 56px; }
+  .casos-grid { display: grid; gap: 24px; }
+  .caso-card {
+    background: var(--gris); border-radius: 16px; padding: 32px;
+    display: grid; grid-template-columns: auto 1fr; gap: 24px; align-items: start;
+    border: 1.5px solid var(--gris-medio);
+    transition: border-color .2s, box-shadow .2s;
+  }
+  .caso-card:hover { border-color: var(--verde); box-shadow: 0 4px 20px rgba(15,110,86,.08); }
+  .caso-num {
+    width: 56px; height: 56px; border-radius: 14px;
+    background: var(--verde); color: white;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 20px; font-weight: 800; flex-shrink: 0;
+  }
+  .caso-num.extra { background: var(--ambar); color: var(--oscuro); }
+  .caso-contenido {}
+  .caso-tipo { font-size: 11px; font-weight: 700; color: var(--verde); text-transform: uppercase; letter-spacing: 1px; margin-bottom: 6px; }
+  .caso-tipo.extra { color: #b8860b; }
+  .caso-titulo { font-size: 18px; font-weight: 700; color: var(--oscuro); margin-bottom: 8px; }
+  .caso-desc { font-size: 14px; color: var(--texto-suave); line-height: 1.7; margin-bottom: 14px; }
+  .caso-tags { display: flex; gap: 8px; flex-wrap: wrap; }
+  .tag {
+    font-size: 11px; font-weight: 600; padding: 4px 10px; border-radius: 6px;
+    background: white; color: var(--texto-suave); border: 1px solid var(--gris-medio);
+  }
+  .caso-resultado {
+    margin-top: 14px; padding: 12px 16px;
+    background: var(--verde-claro); border-radius: 10px; border-left: 3px solid var(--verde);
+    font-size: 13px; color: var(--oscuro); font-weight: 500;
+  }
+  .caso-resultado.extra { background: var(--ambar-claro); border-left-color: var(--ambar); }
+
+  /* ── PROCESO ── */
+  #proceso { background: #2E1F1D; color: white; }
+  .proceso-header { text-align: center; margin-bottom: 56px; }
+  .proceso-header .section-titulo { color: white; }
+  .proceso-header .section-desc { color: rgba(255,255,255,.65); margin: 0 auto; }
+  .pasos-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 32px; }
+  .paso {
+    text-align: center; padding: 32px 24px;
+    background: rgba(255,255,255,.05); border-radius: 16px;
+    border: 1px solid rgba(255,255,255,.08);
+  }
+  .paso-num {
+    width: 48px; height: 48px; border-radius: 50%;
+    background: #C8E6E2; color: #2E1F1D;
+    display: flex; align-items: center; justify-content: center;
+    font-weight: 800; font-size: 18px; margin: 0 auto 16px;
+  }
+  .paso-titulo { font-size: 16px; font-weight: 700; margin-bottom: 10px; color: white; }
+  .paso-desc { font-size: 13px; color: rgba(255,255,255,.6); line-height: 1.7; }
+
+  /* ── AGENDAR ── */
+  #agendar { background: var(--gris); }
+  .agendar-inner {
+    background: linear-gradient(135deg, #5AADA4 0%, #2E1F1D 100%);
+    border-radius: 24px; padding: 64px 48px; text-align: center;
+    max-width: 700px; margin: 0 auto;
+    box-shadow: 0 20px 60px rgba(90,173,164,.2);
+  }
+  .agendar-inner h2 { font-size: clamp(28px, 4vw, 40px); font-weight: 800; color: white; margin-bottom: 16px; }
+  .agendar-inner p { font-size: 16px; color: rgba(255,255,255,.75); margin-bottom: 36px; line-height: 1.7; }
+  .agendar-gratis {
+    display: inline-block;
+    background: rgba(242,214,208,.2); border: 1px solid rgba(242,214,208,.4);
+    color: #F2D6D0; padding: 6px 16px; border-radius: 20px;
+    font-size: 12px; font-weight: 600; margin-bottom: 24px;
+  }
+  .btn-agendar {
+    display: inline-block;
+    background: #F2D6D0; color: #2E1F1D;
+    padding: 16px 40px; border-radius: 12px;
+    text-decoration: none; font-weight: 800; font-size: 17px;
+    transition: transform .2s, box-shadow .2s;
+    box-shadow: 0 6px 24px rgba(242,214,208,.4);
+  }
+  .btn-agendar:hover { transform: translateY(-3px); box-shadow: 0 12px 36px rgba(242,214,208,.55); }
+  .agendar-nota { font-size: 12px; color: rgba(255,255,255,.5); margin-top: 16px; }
+
+  /* ── FOOTER ── */
+  footer {
+    background: #2E1F1D; color: rgba(255,255,255,.6);
+    padding: 40px 24px; text-align: center;
+  }
+  .footer-logo { font-size: 18px; font-weight: 800; color: white; margin-bottom: 8px; }
+  .footer-logo span { color: #C8E6E2; }
+  .footer-sub { font-size: 13px; margin-bottom: 24px; }
+  .footer-links { display: flex; gap: 24px; justify-content: center; flex-wrap: wrap; margin-bottom: 24px; }
+  .footer-links a { color: rgba(255,255,255,.5); text-decoration: none; font-size: 13px; transition: color .2s; }
+  .footer-links a:hover { color: #C8E6E2; }
+  .footer-copy { font-size: 12px; color: rgba(255,255,255,.3); }
+
+  /* ── RESPONSIVE ── */
+  @media (max-width: 640px) {
+    nav { padding: 12px 16px; }
+    .nav-links { display: none; }
+    .caso-card { grid-template-columns: 1fr; }
+    .caso-num { width: 44px; height: 44px; font-size: 16px; }
+    .agendar-inner { padding: 40px 24px; }
+    .hero-stats { gap: 32px; }
+  }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <div class="nav-logo">@gmiranda<span>.gestion</span></div>
+  <ul class="nav-links">
+    <li><a href="#servicios">Servicios</a></li>
+    <li><a href="#portafolio">Portafolio</a></li>
+    <li><a href="#proceso">Cómo trabajo</a></li>
+  </ul>
+  <a href="#agendar" class="nav-cta">Agendar diagnóstico</a>
+</nav>
+
+<!-- HERO -->
+<section id="inicio">
+  <div class="hero-badge">📊 Control de Gestión · Región de Valparaíso</div>
+  <h1 class="hero-titulo">
+    Tu pyme merece<br>
+    decisiones con <span class="highlight">datos reales</span>
+  </h1>
+  <p class="hero-subtitulo">
+    Ayudo a dueños de pyme a entender sus números, identificar dónde se pierde dinero y tomar decisiones con claridad — sin necesidad de ser contador ni experto en Excel.
+  </p>
+  <div class="hero-btns">
+    <a href="#agendar" class="btn-primary">🗓 Agendar diagnóstico gratis</a>
+    <a href="#portafolio" class="btn-secondary">Ver portafolio →</a>
+  </div>
+  <div class="hero-stats">
+    <div class="stat-item">
+      <div class="stat-num">5+</div>
+      <div class="stat-label">Casos reales</div>
+    </div>
+    <div class="stat-item">
+      <div class="stat-num">3</div>
+      <div class="stat-label">Rubros atendidos</div>
+    </div>
+    <div class="stat-item">
+      <div class="stat-num">100%</div>
+      <div class="stat-label">Adaptado a tu negocio</div>
+    </div>
+  </div>
+</section>
+
+<!-- SERVICIOS -->
+<section id="servicios">
+  <div class="container">
+    <div class="servicios-header">
+      <div class="section-label">Servicios</div>
+      <h2 class="section-titulo">¿En qué te puedo ayudar?</h2>
+      <p class="section-desc">Trabajo con pymes de distintos rubros para que puedas ver tu negocio con claridad y actuar a tiempo.</p>
+    </div>
+    <div class="servicios-grid">
+      <div class="servicio-card">
+        <div class="servicio-icono">💰</div>
+        <div class="servicio-titulo">Control Financiero</div>
+        <p class="servicio-desc">Organiza tus ingresos, costos y márgenes para saber exactamente cuánto ganas y dónde se va el dinero.</p>
+        <ul class="servicio-entregables">
+          <li>Dashboard de ventas y gastos</li>
+          <li>Análisis de margen por producto</li>
+          <li>Alerta de días críticos</li>
+        </ul>
+      </div>
+      <div class="servicio-card">
+        <div class="servicio-icono">📦</div>
+        <div class="servicio-titulo">Gestión de Inventario</div>
+        <p class="servicio-desc">Evita quiebres de stock y productos muertos. Sabe qué comprar, cuándo y cuánto, con datos de tu propio negocio.</p>
+        <ul class="servicio-entregables">
+          <li>Ranking de productos estrella</li>
+          <li>Alertas de reposición</li>
+          <li>Análisis de rotación</li>
+        </ul>
+      </div>
+      <div class="servicio-card">
+        <div class="servicio-icono">📊</div>
+        <div class="servicio-titulo">Dashboard de Gestión</div>
+        <p class="servicio-desc">Un panel a medida con los indicadores que realmente importan para tu tipo de negocio, actualizable en tiempo real.</p>
+        <ul class="servicio-entregables">
+          <li>KPIs clave en una pantalla</li>
+          <li>Visualización por turno/local/vehículo</li>
+          <li>Exportable y compartible</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PORTAFOLIO -->
+<section id="portafolio">
+  <div class="container">
+    <div class="portafolio-header">
+      <div class="section-label">Portafolio</div>
+      <h2 class="section-titulo">Casos de trabajo</h2>
+      <p class="section-desc">Ejemplos reales de lo que puedo construir para tu negocio, adaptados a cada rubro y tamaño.</p>
+    </div>
+    <div class="casos-grid">
+
+      <div class="caso-card">
+        <div class="caso-num">1</div>
+        <div class="caso-contenido">
+          <div class="caso-tipo">Almacén · Control Financiero</div>
+          <div class="caso-titulo">Análisis de márgenes y días críticos</div>
+          <p class="caso-desc">Dashboard de 6 meses de operación para un almacén familiar. Identifica los días con margen negativo por compras a proveedor y visualiza la tendencia real de ingresos.</p>
+          <div class="caso-tags">
+            <span class="tag">Looker Studio</span>
+            <span class="tag">Google Sheets</span>
+            <span class="tag">Análisis de margen</span>
+          </div>
+          <div class="caso-resultado">📌 Hallazgo: los lunes el margen cae hasta $77 por efecto de compras. Con esta visión, el dueño pudo redistribuir las compras durante la semana.</div>
+        </div>
+      </div>
+
+      <div class="caso-card">
+        <div class="caso-num">2</div>
+        <div class="caso-contenido">
+          <div class="caso-tipo">Distribuidora · Gestión de Inventario</div>
+          <div class="caso-titulo">Ranking de productos y control de stock</div>
+          <p class="caso-desc">Panel de inventario para distribuidora con 51 productos activos. Visualiza cuáles generan el 80% de las ventas y cuáles necesitan reposición urgente.</p>
+          <div class="caso-tags">
+            <span class="tag">Looker Studio</span>
+            <span class="tag">Análisis ABC</span>
+            <span class="tag">Alertas de stock</span>
+          </div>
+          <div class="caso-resultado">📌 Resultado: 12 productos concentran el 59,6% de las ventas. Con este dato, se optimizó el espacio de bodega y las compras prioritarias.</div>
+        </div>
+      </div>
+
+      <div class="caso-card">
+        <div class="caso-num">3</div>
+        <div class="caso-contenido">
+          <div class="caso-tipo">Cafetería · Análisis de Ventas</div>
+          <div class="caso-titulo">Mapa de calor por día y horario</div>
+          <p class="caso-desc">App interactiva para cafetería que muestra cuándo y qué se vende más. Heatmap clickeable por día × franja horaria, con detalle de productos más vendidos en cada momento.</p>
+          <div class="caso-tags">
+            <span class="tag">Apps Script</span>
+            <span class="tag">Heatmap interactivo</span>
+            <span class="tag">Análisis de horarios</span>
+          </div>
+          <div class="caso-resultado">📌 Hallazgo: viernes y sábados en la tarde concentran los tickets más altos. Dato clave para planificar dotación y stock de fin de semana.</div>
+        </div>
+      </div>
+
+      <div class="caso-card">
+        <div class="caso-num extra">E1</div>
+        <div class="caso-contenido">
+          <div class="caso-tipo extra">Caso Extra · Monitoreo de Flota</div>
+          <div class="caso-titulo">Dashboard de repartos con mapa en tiempo real</div>
+          <p class="caso-desc">Sistema de monitoreo para flota de 6 vehículos con 436 viajes en 30 días. Mapa interactivo con marcadores por estado, panel de alertas priorizadas y métricas de puntualidad.</p>
+          <div class="caso-tags">
+            <span class="tag">Apps Script</span>
+            <span class="tag">Leaflet.js</span>
+            <span class="tag">Alertas por vehículo</span>
+          </div>
+          <div class="caso-resultado caso-resultado extra">📌 Detecta automáticamente detenciones no programadas y conductores con mayor tasa de retraso, permitiendo actuar antes de que el problema escale.</div>
+        </div>
+      </div>
+
+      <div class="caso-card">
+        <div class="caso-num extra">E2</div>
+        <div class="caso-contenido">
+          <div class="caso-tipo extra">Caso Extra · Monitoreo de Sucursales</div>
+          <div class="caso-titulo">Panel de cumplimiento de metas por local</div>
+          <p class="caso-desc">Dashboard para empresa con 4 sucursales en la región de Valparaíso. Muestra en tiempo real qué locales cumplen su meta diaria, tendencia de ventas y mapa georreferenciado.</p>
+          <div class="caso-tags">
+            <span class="tag">Apps Script</span>
+            <span class="tag">Leaflet.js</span>
+            <span class="tag">KPIs por sucursal</span>
+          </div>
+          <div class="caso-resultado caso-resultado extra">📌 Villa Alemana opera al 77% de su meta. Con visibilidad en tiempo real, la gerencia puede intervenir el mismo día en lugar de enterarse a fin de mes.</div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- PROCESO -->
+<section id="proceso">
+  <div class="container">
+    <div class="proceso-header">
+      <div class="section-label" style="color:#C8E6E2">Metodología</div>
+      <h2 class="section-titulo">¿Cómo trabajo?</h2>
+      <p class="section-desc">Un proceso simple y directo, pensado para que veas resultados desde la primera sesión.</p>
+    </div>
+    <div class="pasos-grid">
+      <div class="paso">
+        <div class="paso-num">1</div>
+        <div class="paso-titulo">Diagnóstico gratuito</div>
+        <p class="paso-desc">Conversamos 30 minutos sobre tu negocio, qué mides hoy y qué decisiones necesitas tomar con más claridad.</p>
+      </div>
+      <div class="paso">
+        <div class="paso-num">2</div>
+        <div class="paso-titulo">Propuesta a medida</div>
+        <p class="paso-desc">Te presento qué vamos a construir, con qué datos y qué vas a poder ver una vez que esté listo. Sin tecnicismos.</p>
+      </div>
+      <div class="paso">
+        <div class="paso-num">3</div>
+        <div class="paso-titulo">Implementación</div>
+        <p class="paso-desc">Construyo el sistema en las herramientas que ya usas — Google Sheets, Drive — o las más adecuadas para tu operación.</p>
+      </div>
+      <div class="paso">
+        <div class="paso-num">4</div>
+        <div class="paso-titulo">Entrega y acompañamiento</div>
+        <p class="paso-desc">Te enseño a usar todo, te entrego los archivos y quedamos en contacto para ajustes según cómo evoluciona tu negocio.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- AGENDAR -->
+<section id="agendar">
+  <div class="container">
+    <div class="agendar-inner">
+      <div class="agendar-gratis">✨ Sin costo · Sin compromiso</div>
+      <h2>¿Listo para ver tu negocio con claridad?</h2>
+      <p>Agenda un diagnóstico gratuito de 30 minutos. Analizamos juntos tus números y te digo exactamente qué puedo hacer por ti.</p>
+      <a href="TU_LINK_CALENDLY_AQUI" target="_blank" class="btn-agendar">🗓 Agendar diagnóstico gratuito</a>
+      <p class="agendar-nota">100% online · Región de Valparaíso y todo Chile</p>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-logo">@gmiranda<span>.gestion</span></div>
+  <p class="footer-sub">Control de gestión para pymes · Región de Valparaíso, Chile</p>
+  <div class="footer-links">
+    <a href="#inicio">Inicio</a>
+    <a href="#servicios">Servicios</a>
+    <a href="#portafolio">Portafolio</a>
+    <a href="#proceso">Cómo trabajo</a>
+    <a href="#agendar">Agendar</a>
+  </div>
+  <p class="footer-copy">© 2026 Gabriela Miranda · Todos los derechos reservados</p>
+</footer>
+
+</body>
+</html>
